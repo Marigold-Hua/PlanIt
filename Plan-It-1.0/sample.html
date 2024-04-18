@@ -4,9 +4,33 @@
         <meta charset="UTF-8">
         <title>Four Boxes</title>
         <link rel="stylesheet" href="./CSS/sample.css">
+        <script defer src="./JS/sample.js"></script>
     </head>
     <body>
-        <div id="container"></div>
-        <script src="./JS/sample.js"></script>
+        <div id = "calendar">
+            <div class = "timekey">
+                <h1>Time</h1>
+                <div class = "timeset">
+                    <!--Dynamically generated hours -->
+                </div>
+            </div>
+
+            <div class = "week">
+                <!--Dynamically generated week and hours-->
+               
+                <template id = "day-template">
+                    <div class = "day">
+                        <h1>Sample Day</h1>
+                        <div class = "hourset">
+                            <div class = "quarterset">
+                                <h6>Blank quarter</h6>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                
+            </div>
+
+        </div>
     </body>
 </html>
