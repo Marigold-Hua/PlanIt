@@ -1,6 +1,18 @@
 body {
     background-color: black;
+    color: white;
 }
+
+.weekContainer{
+    display: flex;
+    margin: 5%;
+}
+
+.day{
+    margin: 5%;
+    border: white 2px;
+}
+
 .hour {
     width: 120px;
     height: 110px;
