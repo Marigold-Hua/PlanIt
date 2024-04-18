@@ -1,14 +1,22 @@
 body {
     background-color: black;
-}
-.hour {
-    width: 120px;
-    height: 110px;
-    background-color: cyan;
+    color: white;
 }
 
-.quarter {
-    width: 100px;
-    height: 20px;
-    background-color: white;
+.weekContainer {
+    display: flex;
+    width: 1000px;
+    height: 800 px;
+    background: purple;
+}
+
+.day {
+    width: 100 px; 
+    height: 700 px; 
+    background: cyan;
+}
+.quarter{
+    width: 100px; 
+    height: 20 px;
+    color: white;
 }
