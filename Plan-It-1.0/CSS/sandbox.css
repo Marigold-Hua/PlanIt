@@ -3,20 +3,24 @@ body {
     color: white;
 }
 
-.weekContainer {
+.weekContainer{
     display: flex;
-    width: 1000px;
-    height: 800 px;
-    background: purple;
+    margin: 5%;
 }
 
-.day {
-    width: 100 px; 
-    height: 700 px; 
-    background: cyan;
+.day{
+    margin: 5%;
+    border: white 2px;
 }
-.quarter{
-    width: 100px; 
-    height: 20 px;
-    color: white;
+
+.hour {
+    width: 120px;
+    height: 110px;
+    background-color: cyan;
+}
+
+.quarter {
+    width: 100px;
+    height: 20px;
+    background-color: white;
 }
