@@ -1,12 +1,10 @@
 body {
     background-color: black;
 }
-
 .hour {
     width: 120px;
     height: 110px;
     background-color: cyan;
-    border: black solid 2px;
 }
 
 .quarter {
