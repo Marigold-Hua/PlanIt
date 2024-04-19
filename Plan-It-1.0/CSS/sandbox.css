@@ -1,26 +1,68 @@
+/* General Styling */
 body {
     background-color: black;
-    color: white;
+    color: #deeda0;
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.weekContainer{
+button {
+    text-align: left; /*Why not working? - doesn't work if you specify class styling either*/
+    background-color: #deeda0;
+    color: black;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 20px;
+    margin-top: 1%;
+    height: 40px;
+    padding: 10px 10px;
+}
+
+.calendar-container{
+    display:flex;
+}
+
+/* Timekey Styling */
+.calHeader{
+    margin-bottom: 10px;
+    padding: 20px;
+    width: 100px;
+    margin: 8px;
+    
+}
+
+.hourLabel{
+    height: 80px;
+    line-height: 80px;
+}
+
+/* Calendar styling */
+.week-container{
     display: flex;
-    margin: 5%;
+    padding: 10px;
 }
 
-.day{
-    margin: 5%;
-    border: white 2px;
+.day {
+    margin: 8px;
+    border-radius: 20px;
 }
 
-.hour {
-    width: 120px;
-    height: 110px;
-    background-color: cyan;
+.day-header{
+    border: #deeda0 solid 3px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.hourContainer {
+    border: #deeda0 solid 3px;
+    border-radius: 30px;
 }
 
 .quarter {
     width: 100px;
     height: 20px;
-    background-color: white;
+}
+
+.quarter:hover {
+    background-color: #deeda0
 }

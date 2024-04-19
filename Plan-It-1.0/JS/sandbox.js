@@ -1,14 +1,52 @@
-let startTime = 9;
+let startTime = 17;
 let endTime = 21;
 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-document.addEventListener('DOMContentLoaded', makeBoxes());
+document.addEventListener('DOMContentLoaded', makeCalendar());
 
-function makeBoxes(){
+//Function calls all functions used to make calendar
+function makeCalendar(){
+
+    makeTimeKey();
+    makeWeek();
+}
+
+//Generates time key
+function makeTimeKey(){
+    // Get the time key container element
+    const timeKey = document.querySelector('.time-key');
+
+    //Add header to time key 
+    const timeKeyHeader = document.createElement('div');
+    timeKeyHeader.className = 'calHeader';
+    timeKeyHeader.innerText = "Time";
+    timeKey.append(timeKeyHeader);
+
+    //Add hour label for each out 
+    for (h = startTime; h < endTime+1; h++){
+        //Create current hour
+        const newHour = document.createElement('div');
+        newHour.className = 'hourLabel';
+
+        if (h < 12) {
+            newHour.innerText = h + ":00 AM";
+        }
+        else {
+            newHour.innerText = h-12 + ":00 PM";
+        }
+
+        //Add current hour to hour container
+        timeKey.append(newHour);
+    }
+
+ }
+
+ //Generates week 
+function makeWeek(){
 
     // Get the week container element
-    const container = document.querySelector('.weekContainer');
+    const container = document.querySelector('.week-container');
 
     //Generate day within week container
     for (day in dayArray){
@@ -21,7 +59,7 @@ function makeBoxes(){
 
         //Create heading of day
         const dayHeader = document.createElement('div');
-        dayHeader.className = 'dayHeader';
+        dayHeader.className = 'day-header';
         dayHeader.innerText = dayArray[day];
         newDay.append(dayHeader);
 
@@ -51,6 +89,7 @@ function makeBoxes(){
                 //Create current quarter
                 const quarterContainer = document.createElement('div');
                 quarterContainer.className = 'quarter';
+                quarterContainer.id = dayArray[day] + "-" + h + "-" + q; 
 
                 //Append quarter to hour container
                 newHour.appendChild(quarterContainer);
