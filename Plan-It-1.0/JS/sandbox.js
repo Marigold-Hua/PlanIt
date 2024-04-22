@@ -18,10 +18,11 @@ APIs and Libraries to Check Out
 
 let startTime = 17;
 let endTime = 21;
-let projectID = 0;
+let projectNum = 0;
 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da']
+const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da'];
+const projectNames = ['Exercise', 'PUI Project', 'Webtoon', 'Meals', 'Social', 'Research'];
 
 //Call function to generate calendar once webpage loads
 document.addEventListener('DOMContentLoaded', makeCalendar);
@@ -127,17 +128,18 @@ function makeWeek(){
   
   function addProject(){
     //Evaluate if project is within limit
-    if (projectID < colorArray.length){
+    if (projectNum < colorArray.length){
     //Make clone of project template
         const template = document.querySelector('#project-template');
         const clone = template.content.cloneNode(true);
         const project = clone.querySelector(".project");
 
         //Change project ID and formatting
-        project.id = "project-" + projectID;
-        project.style.color = colorArray[projectID % (colorArray.length)];
-        project.style.border = colorArray[projectID % (colorArray.length)] + " solid 3px";
-        projectID++;
+        project.id = "project-" + projectNum;
+        project.innerText = projectNames[projectNum];
+        project.style.color = colorArray[projectNum % (colorArray.length)];
+        project.style.border = colorArray[projectNum % (colorArray.length)] + " solid 3px";
+        projectNum++;
 
         //Add cloned project to DOM
         const projectManager = document.querySelector('#project-manager');
