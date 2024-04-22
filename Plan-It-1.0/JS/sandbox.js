@@ -19,6 +19,8 @@ APIs and Libraries to Check Out
 let startTime = 17;
 let endTime = 21;
 let projectNum = 0;
+let currentProject = "None";
+let projectList;
 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da'];
@@ -32,7 +34,6 @@ document.querySelector('#add-project-button').addEventListener('click', addProje
 
 //Function calls all functions used to make calendar
 function makeCalendar(){
-
     makeTimeKey();
     makeWeek();
 }
@@ -54,6 +55,7 @@ function makeTimeKey(){
         const newHour = document.createElement('div');
         newHour.className = 'hourLabel';
 
+        //Add AM and PM indicators 
         if (h < 12) {
             newHour.innerText = h + ':00 AM';
         }
@@ -126,6 +128,7 @@ function makeWeek(){
   
   /* Functions involved in managing projects */
   
+  //Adds project, including associated event listner
   function addProject(){
     //Evaluate if project is within limit
     if (projectNum < colorArray.length){
@@ -144,12 +147,26 @@ function makeWeek(){
         //Add cloned project to DOM
         const projectManager = document.querySelector('#project-manager');
         projectManager.append(project);
+
+        //Add event listner to new project - work in progress -
+        document.querySelector('#'+'project.id').addEventListener('click', updateProjectSelected);
+        /*
+        //Update event listners and project list
+        projectList = document.querySelectorAll('.project');
+        updateProjectEventListeners();
+        */
     }
     else {
         projectLimit();
     }
   }
 
+  //What happends when project limit is reached - message to console (for now)
   function projectLimit(){
     console.log("Project limit reached");
+  }
+
+  //Keeps track of which project is currently selected  - work in progress -
+  function updateProjectSelected(){
+    console.log();
   }

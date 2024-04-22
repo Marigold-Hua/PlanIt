@@ -55,6 +55,7 @@ button {
 .hourContainer {
     border: #deeda0 solid 3px;
     border-radius: 30px;
+    overflow: hidden;
 }
 
 .quarter {
