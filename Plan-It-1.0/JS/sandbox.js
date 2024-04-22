@@ -1,3 +1,21 @@
+/* 
+1. Focus user input: Add task - drag and drop (or), add gradient (hardcode colors for now)
+2. Get gradient working
+3. Implement transition: Gradient merge 
+4. Make calendar responsive (ex: on collapse - days take up whole screen) - time embedded in day
+5. Implement projects
+
+Purposes: 
+1. Starting small --> build - Step one thing --> add cal
+2. Key: *** Fuzzy view of time/deadlines - make people feel better about the way they are productive
+
+Check rubric!!!
+
+APIs and Libraries to Check Out
+- 
+
+*/
+
 let startTime = 17;
 let endTime = 21;
 
