@@ -18,10 +18,16 @@ APIs and Libraries to Check Out
 
 let startTime = 17;
 let endTime = 21;
+let projectID = 0;
 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da']
 
-document.addEventListener('DOMContentLoaded', makeCalendar());
+//Call function to generate calendar once webpage loads
+document.addEventListener('DOMContentLoaded', makeCalendar);
+
+//Call function to add project when project button is clicked
+document.querySelector('#add-project-button').addEventListener('click', addProject);
 
 //Function calls all functions used to make calendar
 function makeCalendar(){
@@ -38,7 +44,7 @@ function makeTimeKey(){
     //Add header to time key 
     const timeKeyHeader = document.createElement('div');
     timeKeyHeader.className = 'calHeader';
-    timeKeyHeader.innerText = "Time";
+    timeKeyHeader.innerText = 'Time';
     timeKey.append(timeKeyHeader);
 
     //Add hour label for each out 
@@ -48,10 +54,10 @@ function makeTimeKey(){
         newHour.className = 'hourLabel';
 
         if (h < 12) {
-            newHour.innerText = h + ":00 AM";
+            newHour.innerText = h + ':00 AM';
         }
         else {
-            newHour.innerText = h-12 + ":00 PM";
+            newHour.innerText = h-12 + ':00 PM';
         }
 
         //Add current hour to hour container
@@ -85,7 +91,7 @@ function makeWeek(){
         //Create container for hours within day
         const hourContainer = document.createElement('div');
         hourContainer.className = 'hourContainer';
-        hourContainer.id = dayArray[day] + "-hourContainer";
+        hourContainer.id = dayArray[day] + '-hourContainer';
 
         //Add hour container to day 
         newDay.append(hourContainer);
@@ -96,7 +102,7 @@ function makeWeek(){
             //Create current hour
             const newHour = document.createElement('div');
             newHour.className = 'hour';
-            newHour.id = dayArray[day] + "-" + h;
+            newHour.id = dayArray[day] + '-' + h;
 
             //Add current hour to hour container
             hourContainer.append(newHour);
@@ -107,7 +113,7 @@ function makeWeek(){
                 //Create current quarter
                 const quarterContainer = document.createElement('div');
                 quarterContainer.className = 'quarter';
-                quarterContainer.id = dayArray[day] + "-" + h + "-" + q; 
+                quarterContainer.id = dayArray[day] + '-' + h + '-' + q; 
 
                 //Append quarter to hour container
                 newHour.appendChild(quarterContainer);
@@ -117,3 +123,31 @@ function makeWeek(){
     }
   };
   
+  /* Functions involved in managing projects */
+  
+  function addProject(){
+    //Evaluate if project is within limit
+    if (projectID < colorArray.length){
+    //Make clone of project template
+        const template = document.querySelector('#project-template');
+        const clone = template.content.cloneNode(true);
+        const project = clone.querySelector(".project");
+
+        //Change project ID and formatting
+        project.id = "project-" + projectID;
+        project.style.color = colorArray[projectID % (colorArray.length)];
+        project.style.border = colorArray[projectID % (colorArray.length)] + " solid 3px";
+        projectID++;
+
+        //Add cloned project to DOM
+        const projectManager = document.querySelector('#project-manager');
+        projectManager.append(project);
+    }
+    else {
+        projectLimit();
+    }
+  }
+
+  function projectLimit(){
+    console.log("Project limit reached");
+  }

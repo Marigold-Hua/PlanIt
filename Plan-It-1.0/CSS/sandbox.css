@@ -1,18 +1,17 @@
 /* General Styling */
 body {
     background-color: black;
+    justify-content: center;
     color: #deeda0;
     text-align: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 button {
-    text-align: left; /*Why not working? - doesn't work if you specify class styling either*/
     background-color: #deeda0;
     color: black;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     border-radius: 20px;
-    margin-top: 1%;
     height: 40px;
     padding: 10px 10px;
 }
@@ -64,5 +63,19 @@ button {
 }
 
 .quarter:hover {
-    background-color: #deeda0
+    background-color: #deeda0;
+}
+
+/* Project Styling*/
+#project-manager {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    margin: 1%;
+    gap: 1%;
+}
+
+.project {
+    border-radius: 30px;
+    padding: 9px;
 }
