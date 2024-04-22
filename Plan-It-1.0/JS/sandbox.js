@@ -1,7 +1,7 @@
 /* 
-1. Focus user input: Add task - drag and drop (or), add gradient (hardcode colors for now)
+1. Focus user input: Add task - drag and drop (or form to add task info), add gradient (hardcode colors for now)
 2. Get gradient working
-3. Implement transition: Gradient merge 
+3. Implement transition: Gradient merge (in CSS) 
 4. Make calendar responsive (ex: on collapse - days take up whole screen) - time embedded in day
 5. Implement projects
 
@@ -12,7 +12,7 @@ Purposes:
 Check rubric!!!
 
 APIs and Libraries to Check Out
-- 
+1. Figure out how to integrate with gcal?
 
 */
 
