@@ -14,7 +14,7 @@ Check rubric!!!
 APIs and Libraries to Check Out
 1. Figure out how to integrate with gcal?
 
-*/
+/* Testing gradient stuff */
 
 let startTime = 17;
 let endTime = 21;
@@ -22,10 +22,10 @@ let projectNum = 0;
 let projectSelected; //so that whenever projectNum is updated, project select is out of range. 
 let projectList;
 
-const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const dayArray = ['Sunday'];
 //const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da'];
-const projectNames = ['Exercise', 'PUI Project', 'Webtoon', 'Meals', 'Social', 'Research'];
+const colorArray = ['#76da71'];
+const projectNames = ['Exercise'];
 
 //Call function to generate calendar once webpage loads
 document.addEventListener('DOMContentLoaded', makeCalendar);
@@ -70,7 +70,6 @@ function test(event){
 
 //Function calls all functions used to make calendar
 function makeCalendar(){
-    makeTimeKey();
     makeWeek();
 }
 
@@ -84,38 +83,7 @@ function test(){
 }
 */
 
-//Generates time key
-function makeTimeKey(){
-    // Get the time key container element
-    const timeKey = document.querySelector('.time-key');
-
-    //Add header to time key 
-    const timeKeyHeader = document.createElement('div');
-    timeKeyHeader.className = 'cal-header';
-    timeKeyHeader.innerText = 'Time';
-    timeKey.append(timeKeyHeader);
-
-    //Add hour label for each out 
-    for (h = startTime; h < endTime+1; h++){
-        //Create current hour
-        const newHour = document.createElement('div');
-        newHour.className = 'hour-label';
-
-        //Add AM and PM indicators 
-        if (h < 12) {
-            newHour.innerText = h + ':00 AM';
-        }
-        else {
-            newHour.innerText = h-12 + ':00 PM';
-        }
-
-        //Add current hour to hour container
-        timeKey.append(newHour);
-    }
-
- }
-
- //Generates week 
+ //Generates week with event listners in quarters
 function makeWeek(){
 
     // Get the week container element
@@ -170,8 +138,27 @@ function makeWeek(){
         }
 
     }
+    //add event listners to all quarters
+    const test = document.querySelectorAll('.quarter');
+   
+    test.forEach(quarter => {
+      quarter.addEventListener('click', testGradient)
+    })
   };
   
+  function testGradient(event){
+    //Connects to id of project that triggered the event 
+    console.log(event.target);
+    var fullQuarterID = event.target.id.split('-');
+    var quarterHour = fullQuarterID[1];
+    var quarterID = fullQuarterID[2];
+
+    if (projectSelected < projectNum) {
+      event.target.style.backgroundColor = colorArray[projectNum];
+    }
+
+    console.log(quarterHour + " " + quarterID);
+  }
   /* Functions involved in managing projects */
   
   //Adds project, including associated event listner
@@ -239,5 +226,6 @@ function makeWeek(){
 
     //Connects to id of project that triggered the event
     var projectInfo = event.target.id.split('-');
-    projectSelected = projectInfo;
+    projectSelected = projectInfo[1];
+    console.log(projectSelected);
   }
