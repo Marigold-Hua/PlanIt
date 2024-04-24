@@ -12,7 +12,7 @@ let endTime = 21; //End of "most productive hours"
 let projectLimit = 5; //max amount of projects user can add
 
 //Variables that track projects
-let projectNum = 0; //tracks the number of projects + next project ID to be assigned
+let projectNum = 0; //tracks the number of projects + next project ID to be assigned -- might be redundant, can probably just use projectNames position but might alsio add extra step to match spot in array with name
 let projectSelected; //tracks the current project that the user has clicked on based on its project number id
 
 //Arrays of information. 
@@ -110,7 +110,7 @@ function makeWeek(){
 
                 //Create current quarter
                 const quarterContainer = document.createElement('div');
-                quarterContainer.className = 'quarter';
+                quarterContainer.className = 'quarter'; //should assign q based on total q - i.e. the 3nd quarter in the 2nd hour would have q value of (2-1)*4+3
                 quarterContainer.id = dayArray[day] + '-' + h + '-' + q; 
 
                 //Append quarter to hour container
