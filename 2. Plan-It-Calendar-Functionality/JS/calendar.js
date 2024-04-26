@@ -8,7 +8,8 @@
 //Variables that will be set by user
 //Note that time variables are taken in as 24 hour time but displayed as 12 hour time
 let startTime = 9;  //start of "most productive hours"
-let endTime = 21; //End of "most productive hours"
+let endTime = 15; //End of "most productive hours"
+//note that (endTime - startTime + 1)*4 -1 is the max quarter number for each day
 let taskLimit = 5; //max amount of tasks user can add
 
 //Variables that track tasks
@@ -21,18 +22,20 @@ const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 //const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; //Optional version of dayArray using single letters for day names
 //These arrays are intended to be temporary, and eventually created based on user input
 const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da'];
-const taskNames = ['Exercise', 'PUI Project', 'Webtoon', 'Meals', 'Social', 'Research'];
+const taskNames = ['Make Bed', 'Do Laundry', 'Sweep floor', 'Do Dishes', 'Shower', 'Brush Hair'];
 
 /*Note that the ID of the quarter is what many functiond depend on. Quarter IDs are arranged as follows
     Day-Hour-MacroQuarter-NumberOfTasksInBlock-T1-T2-T3-G1-G2-G3
 
     Where:
-        - Day - what day of the week the quarter is in
-        - Hour - what hour of the day the quarter is in (might be calculatable with floor?)
-        - Macro quarter - what quarter of the day the quarter is
-        - Number of Tasks in Block - A number between 0 and 3 representing how many tasks overlap with that quarter
-        - T1 - T3, the task nunmbers corresponding to the tasks overlapping the quarter. Set to tasktNames.length if none. 
-        - G1 - G3, a number from 1-3 corresponding to the position in the gradient the quarter is in for the correspongding task (ex: G1 corresponsds with the position of the quarter in T1's gradient)
+        - [0]:Day - what day of the week the quarter is in
+        - [1]: Hour - what hour of the day the quarter is in (might be calculatable with floor?)
+        - [2]: Macro quarter - what quarter of the day the quarter is
+        - [3]: Number of Tasks in Block - A number between 0 and 3 representing how many tasks overlap with that quarter //may remove depending on use of T ID portions
+        - [4-6]: T1 - T3, the task nunmbers corresponding to the tasks overlapping the quarter. Set to tasktNames.length if none. 
+        - [7-9]: G1 - G3, a number from 1-3 corresponding to the position in the gradient the quarter is in for the correspongding task (ex: G1 corresponsds with the position of the quarter in T1's gradient)
+
+        *notice the G linked with T is in index T+3
 */
 
 /*Code involved in generating calendar*/
@@ -125,7 +128,10 @@ function makeWeek(){
                 //Create current quarter
                 const quarterContainer = document.createElement('div');
                 quarterContainer.className = 'quarter'; //should assign q based on total q - i.e. the 3nd quarter in the 2nd hour would have q value of (2-1)*4+3
-                quarterContainer.id = dayArray[day] + '-' + h + /*'-' + q + //Antiquated quarter marker, replaced with modulo*/'-' + macroQuarterID; 
+                quarterContainer.id = dayArray[day] + '-' + h + '-' + macroQuarterID + "-" 
+                    + 0 //number of tasks within quarter
+                    + "-" + taskNames.length + "-" + taskNames.length + "-" + taskNames.length //T1-3
+                    + "-" + taskNames.length + "-" + taskNames.length + "-" + taskNames.length;  //G1-3
 
                 //Append quarter to hour container
                 newHour.appendChild(quarterContainer);
@@ -180,12 +186,12 @@ function addTask(){
         document.querySelector('#' + task.id).addEventListener('click', updateTaskSelected);
     }
     else {
-       taskNumAtLimit();
+       atLimit();
     }
   }
 
-  //What happends when task limit is reached - message to console (for now - sends message to console)
-  function taskNumAtLimit(){
+  //What happends when task limits are reached - message to console (for now - sends message to console)
+  function atLimit(){
     console.log('Task limit reached');
   }
 
@@ -200,24 +206,50 @@ function addTask(){
   function updateTaskSelected(event){
     //Connects to id of task that triggered the event 
     isTaskSelected = true;
-    var taskInfo = event.target.id.split('-');
+    let taskInfo = event.target.id.split('-');
+    taskSelected = taskInfo[1];
     //console.log(taskInfo);
 
     //Sets task selected equal to the task number associated with the clicked task
     whichTaskNumSelected = taskInfo[1];
 
-    //console.log(taskSelected + '' + isTaskSelected); //test if correct taskNumber is being set
+    console.log(taskSelected + '' + isTaskSelected); //test if correct taskNumber is being set
   }
 
   //Makes gradients based on what and how many tasks are nearby, and what task is currently selected
   function makeGradient(event){
-    //console.log('connected'); //
-    var fullQuarterID = event.target.id.split('-');
+
+    const clickedQuarterID = event.target.id;
+    const fullQuarterIDName = event.target.id.split('-');
     //whichTaskNumSelected
-    var macroQuarterID = fullQuarterID[2];
+    const macroQuarterID = fullQuarterIDName[2];
+    let task1ID = fullQuarterIDName[4];
+    let task2ID = fullQuarterIDName[5];
+    let task3ID = fullQuarterIDName[6];
+    let gradient1ID;
+    let gradient2ID;
+    let gradient3ID;
+
+    document.getElementById(clickedQuarterID).backgroundColor = colorArray[whichTaskNumSelected];
+
+    /* correct logic later
+    //Logic checks to see if task spaces have been filled by another task
+    if (task1ID = taskNames.length){
+        setGradient1(clickedQuarterID);
+    }
+        else if (task2ID = taskNames.length) {
+
+        }
+            else if (task3ID = taskNames.length) {
+
+            }
+                else {
+                    atLimit();
+                }
+
     //console.log(macroQuarterID + "-" + whichTaskNumSelected); //test
-
-
+                */
+    
     /*if (taskSelected) {
       event.target.style.backgroundColor = colorArray[taskNum];
       event.
@@ -225,3 +257,16 @@ function addTask(){
 
     //console.log(quarterHour + ' ' + quarterID + ' ' + quarterMacroId); //test 
   }
+
+ 
+  function setGradient1(clickedQuarterID){
+    //Get quarters impacted by change, on above quarter clicked
+    //Check if quarters above are within quarter bounds
+    document.getElementById('#' + clickedQuarterID).backgroundColor = colorArray[whichTaskNumSelected];
+    if (macroQuarterID-1 >= 0){ //Check if quarter directly above is within bounds
+        //if (macroQuarterID-2 >= 0){ //Check if quarter two rows above is within bounds
+    }
+    //Get quarters impacted by change, on below quarter clicked
+    //Check if quarters below are within quarter bonds
+  }
+  

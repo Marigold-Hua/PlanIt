@@ -69,8 +69,10 @@ button {
     background-color: #deeda0;
 }
 
-/* Project Styling*/
-#project-manager {
+/* Project Styling */ 
+/* can delete/deactivate for responsiveness' sake */
+
+#task-manager {
     display: flex;
     flex-direction: row;
     align-items:center;
@@ -80,7 +82,7 @@ button {
     padding-top: 1%;;
 }
 
-.project {
+.task {
     border-radius: 30px;
     padding: 9px;
 }
