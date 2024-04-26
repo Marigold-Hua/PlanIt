@@ -21,69 +21,22 @@ let endTime = 21;
 let projectNum = 0;
 let projectSelected; //so that whenever projectNum is updated, project select is out of range. 
 let projectList;
+let taskSelected = false;
 
 const dayArray = ['Sunday'];
 //const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-const colorArray = ['#76da71'];
-const projectNames = ['Exercise'];
+const colorArray = ['#76da71', '#FFFFFF'];
+const projectNames = ['Task 1', 'Task 2'];
 
 //Call function to generate calendar once webpage loads
 document.addEventListener('DOMContentLoaded', makeCalendar);
 
 //Call function to add project when project button is clicked
 document.querySelector('#add-project-button').addEventListener('click', addProject);
-
-/* In-progress: Tests for triggering addTask on click within calendar times
-//Use event delegation to pass clicks from each nested element of the week (from week container to quarter)
-//Select all elemnts with a corresponding class
-const allWeek = document.querySelector('.week-container');
-const allDay = document.querySelectorAll('.day');
-const allHour = document.querySelectorAll('.hour');
-const allQuarter = document.querySelectorAll('.quarter');
-
-//Add event listner to week
-allWeek.addEventListener('click', test)
-//Add event 
-/* //Add event listner to each quarter
-console.log
-quarters.forEach(quarter => {
-quarter.addEventListener('click', addTask); 
-});
-*/
-
-/* Trial - add event listener to all quarters
-//Get all elements with quarter class
-const allQuarters = document.querySelectorAll('.quarter');
-
-//Add event listner to each quarter
-allQuarters.forEach(quarter => {
-quarter.addEventListener('click', test); 
-});
-
-//test event delegaton
-function test(event){
-    event.stopPropagation();
-    console.log('working');
-}
-*/
-
-
-//Function calls all functions used to make calendar
 function makeCalendar(){
     makeWeek();
 }
 
-/*
-//test event listner additions
-document.querySelector('#Sunday-17-4').addEventListener('click', test);
-//document.querySelector('.week-container').addEventListener('click', test);
-
-function test(){
-    console.log("clicked");
-}
-*/
-
- //Generates week with event listners in quarters
 function makeWeek(){
 
     // Get the week container element
@@ -113,6 +66,8 @@ function makeWeek(){
         //Add hour container to day 
         newDay.append(hourContainer);
 
+        let totalQuarter = 0; //Added total quarter to make it easy to track overall which quarter in the day it is on 
+
         //Generate hours
         for (h = startTime; h < endTime+1; h++){
 
@@ -130,7 +85,8 @@ function makeWeek(){
                 //Create current quarter
                 const quarterContainer = document.createElement('div');
                 quarterContainer.className = 'quarter';
-                quarterContainer.id = dayArray[day] + '-' + h + '-' + q; 
+                quarterContainer.id = dayArray[day] + '-' + h + '-' + q + '-' + totalQuarter; 
+                totalQuarter++;
 
                 //Append quarter to hour container
                 newHour.appendChild(quarterContainer);
@@ -148,17 +104,19 @@ function makeWeek(){
   
   function testGradient(event){
     //Connects to id of project that triggered the event 
-    console.log(event.target);
     var fullQuarterID = event.target.id.split('-');
     var quarterHour = fullQuarterID[1];
     var quarterID = fullQuarterID[2];
+    var quarterMacroId = fullQuarterID[3];
 
-    if (projectSelected < projectNum) {
+    if (taskSelected) {
       event.target.style.backgroundColor = colorArray[projectNum];
+      event.
     }
 
-    console.log(quarterHour + " " + quarterID);
+    console.log(quarterHour + " " + quarterID + " " + quarterMacroId);
   }
+
   /* Functions involved in managing projects */
   
   //Adds project, including associated event listner
@@ -172,19 +130,13 @@ function makeWeek(){
 
         //Change project ID and formatting
         project.id = "project-" + projectNum;
-        /*
-        project.innerText = projectNames[projectNum];
-        project.style.color = colorArray[projectNum % (colorArray.length)];
-        project.style.border = colorArray[projectNum % (colorArray.length)] + " solid 3px";
-        */
+
         project.innerText = projectNames[projectNum];
         project.style.color = colorArray[projectNum];
         project.style.border = colorArray[projectNum] + ' solid 3px';
-
-        //Call function that clears the project selected
+       
         clearProjectSelected();
 
-        // Update number of projects
         projectNum++;
 
         //Add cloned project to DOM
@@ -211,20 +163,13 @@ function makeWeek(){
 
   //Clears projectSelected (+1 to projectNum, making it out of bounds of later logic)
   function clearProjectSelected(){
-    projectSelected = projectNum + 1;
+    taskSelected = false;
   }
 
   //Keeps track of which project is currently selected  - work in progress -
   function updateProjectSelected(event){
 
-    /* Test to get project id number from id
-    currentProject = project.id;
-    const projectInfo = projectID.split('-');
-
-    console.log(projectInfo[1]);
-    */
-
-    //Connects to id of project that triggered the event
+    taskSelected = true;
     var projectInfo = event.target.id.split('-');
     projectSelected = projectInfo[1];
     console.log(projectSelected);
