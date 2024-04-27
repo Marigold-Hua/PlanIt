@@ -54,19 +54,20 @@ button {
     padding: 10px;
 }
 
-.hour-container {
+.quarter-container {
     border: rgb(222, 237, 160) solid 3px;
     border-radius: 30px;
     overflow: hidden;
 }
 
 .quarter {
-    width: 100px;
+    width: 120px;
     height: 20px;
 }
 
 .quarter:hover {
     background-color: rgb(222, 237, 160);
+    color: black;
 }
 
 /* Project Styling */ 
