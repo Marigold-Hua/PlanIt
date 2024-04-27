@@ -17,13 +17,18 @@ let taskNum = 0; //tracks the number of tasks + next task ID to be assigned
 let whichTaskNumSelected; //tracks the current task that the user has clicked on based on its task number id
 let isTaskSelected = false;
 
+//Color Variables
+const backgroundColor = window.getComputedStyle(document.body).backgroundColor; //get background color
+console.log(backgroundColor);
+const colorArray = ['rgb(118, 218, 113)', 'rgb(113, 207, 218)']; //simplified colorArray
 //Arrays of information. 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 //const dayArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; //Optional version of dayArray using single letters for day names
 //These arrays are intended to be temporary, and eventually created based on user input
-const colorArray = ['#76da71', '#71daac','#71cfda', '#719bda', '#7371da', '#c071da'];
-const taskNames = ['Make Bed', 'Do Laundry', 'Sweep floor', 'Do Dishes', 'Shower', 'Brush Hair'];
+//const colorArray = ['rgb(118, 218, 113)', 'rgb(113, 218, 172)','rgb(113, 207, 218)', 'rgb(113, 155, 218)', 'rgb(115, 113, 218)', 'rgb(192, 113, 218)'];
+//const taskNames = ['Make Bed', 'Do Laundry', 'Sweep floor', 'Do Dishes', 'Shower', 'Brush Hair'];
 
+const taskNames = ["Work on Pui", "Plan Social Event"]; //simplified list
 /*Note that the ID of the quarter is what many functiond depend on. Quarter IDs are arranged as follows
     Day-Hour-MacroQuarter-NumberOfTasksInBlock-T1-T2-T3-G1-G2-G3
 
@@ -32,10 +37,7 @@ const taskNames = ['Make Bed', 'Do Laundry', 'Sweep floor', 'Do Dishes', 'Shower
         - [1]: Hour - what hour of the day the quarter is in (might be calculatable with floor?)
         - [2]: Macro quarter - what quarter of the day the quarter is
         - [3]: Number of Tasks in Block - A number between 0 and 3 representing how many tasks overlap with that quarter //may remove depending on use of T ID portions
-        - [4-6]: T1 - T3, the task nunmbers corresponding to the tasks overlapping the quarter. Set to tasktNames.length if none. 
-        - [7-9]: G1 - G3, a number from 1-3 corresponding to the position in the gradient the quarter is in for the correspongding task (ex: G1 corresponsds with the position of the quarter in T1's gradient)
-
-        *notice the G linked with T is in index T+3
+        - [4, 5]: T1 - T2, the task nunmbers corresponding to the tasks overlapping the quarter. Set to tasktNames.length if none. 
 */
 
 /*Code involved in generating calendar*/
@@ -130,8 +132,7 @@ function makeWeek(){
                 quarterContainer.className = 'quarter'; //should assign q based on total q - i.e. the 3nd quarter in the 2nd hour would have q value of (2-1)*4+3
                 quarterContainer.id = dayArray[day] + '-' + h + '-' + macroQuarterID + "-" 
                     + 0 //number of tasks within quarter
-                    + "-" + taskNames.length + "-" + taskNames.length + "-" + taskNames.length //T1-3
-                    + "-" + taskNames.length + "-" + taskNames.length + "-" + taskNames.length;  //G1-3
+                    + "-" + taskNames.length + "-" + taskNames.length;
 
                 //Append quarter to hour container
                 newHour.appendChild(quarterContainer);
@@ -142,9 +143,9 @@ function makeWeek(){
     }
 
      //add event listners to all quarters
-     const test = document.querySelectorAll('.quarter');
+     const allQuarters = document.querySelectorAll('.quarter');
    
-     test.forEach(quarter => {
+     allQuarters.forEach(quarter => {
        quarter.addEventListener('click', makeGradient)
      })
 
@@ -210,6 +211,23 @@ function addTask(){
     taskSelected = taskInfo[1];
     //console.log(taskInfo);
 
+    //removes adds selected class to clicked task, removes from the rest. 
+    const allTasks = document.querySelectorAll('.task');
+   
+    allTasks.forEach(task => {
+        if (task.id === event.target.id) {
+            task.classList.add('selected');
+            task.style.backgroundColor = task.style.color;
+            task.style.color = 'black';
+        }
+       else if (task.classList.contains('selected')){
+            task.style.border = task.style.backgroundColor + " solid 3px";
+            task.style.color = task.style.backgroundColor;
+            task.style.backgroundColor = 'black';
+            task.classList.remove('.selected');
+       }
+     })
+
     //Sets task selected equal to the task number associated with the clicked task
     whichTaskNumSelected = taskInfo[1];
 
@@ -222,16 +240,38 @@ function addTask(){
     const clickedQuarterID = event.target.id;
     const fullQuarterIDName = event.target.id.split('-');
     //whichTaskNumSelected
+    const day = fullQuarterIDName[0];
+    const hour = fullQuarterIDName[1];
     const macroQuarterID = fullQuarterIDName[2];
     let task1ID = fullQuarterIDName[4];
     let task2ID = fullQuarterIDName[5];
-    let task3ID = fullQuarterIDName[6];
-    let gradient1ID;
-    let gradient2ID;
-    let gradient3ID;
+    const quarterDOMElement = document.getElementById(clickedQuarterID);
 
-    document.getElementById(clickedQuarterID).backgroundColor = colorArray[whichTaskNumSelected];
+    quarterDOMElement.style.backgroundColor = colorArray[whichTaskNumSelected];
 
+    /* Gradient Trial 1 (fix later)
+
+    //changes color of selected quarter to that corresponding to color of the task
+    if(quarterDOMElement.classList.contains('gradient0') || quarterDOMElement.classList.contains('gradient1') ) //makes sure added task is atleast 1 quarters/15 minutes away from core of next task
+    {}
+
+    } else 
+    {
+        quarterDOMElement.style.backgroundColor = colorArray[whichTaskNumSelected];
+
+        //IDs of quarters n (1-2_ above (a) and below (b)
+        const firstNumAbove = macroQuarterID-1:
+        const secondNumAbove = firstNumAbove-1;
+        const firstNumBelow = macroQuarterID+1:
+        const secondNumBelow = firstNumBelow+1;
+        const target2A = day + "-" + hour + "-" + firstNumAbove + ""
+        const target1A
+        const target1B
+        const target2B
+    }
+    */
+
+    
     /* correct logic later
     //Logic checks to see if task spaces have been filled by another task
     if (task1ID = taskNames.length){
