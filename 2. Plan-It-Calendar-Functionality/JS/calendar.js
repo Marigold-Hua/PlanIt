@@ -144,11 +144,8 @@ function makeDay(day, hasTime){
 
     macroQuarterID  = 0; //the quarter number within the entire day
 
-    //Generate 4 quarters for each hour
-    for (h = startTime; h <= endTime; h++){
-
-        //Generate quarters
-        for (q = 0; q < 4; q++){
+     //Generate quarters
+     for (q = 0; q <= (endTime - startTime + 1)*4 -1; q++){
 
             //Create current quarter
             const quarter = document.createElement('div');
@@ -157,18 +154,18 @@ function makeDay(day, hasTime){
 
             //Append quarter to hour container
             if (q % 4 === 0 && !hasTime){
-                if (h <= 12) {
-                    quarter.innerText = h + ':00 AM';
+                const hour = Math.floor(h/4);
+                if (hour <= 12) {
+                    quarter.innerText = hour + ':00 AM';
                 }
                 else {
-                    quarter.innerText = h-12 + ':00 PM';
+                    quarter.innerText = hour-12 + ':00 PM';
                 }
             }
             quarterContainer.appendChild(quarter);
             macroQuarterID++;
         }
     }
-}
 
 /* Code involved in managing tasks */
 
@@ -264,14 +261,30 @@ function addTask(){
      
     //Seperate get the R, G, B values and append the A value
    
-     console.log(event.target.id);
      //Gets each quarter within 2 neighbors of the clicked quarter
      for (let relQuarter = -2; relQuarter < 3; relQuarter++){
+        
+        //Gets neighboring quarter's information
         const quarterNeighbor = macroQuarter + parseInt(relQuarter);
         const quarterNeighborID = day + '-' + hour + '-' + quarterNeighbor;
         const quarterNeighborDOM = document.getElementById(quarterNeighborID)
-        if(quarterNeighborDOM){
-            quarterNeighborDOM.style.backgroundColor = 'rgba(' + colorRGBArray[3*whichTaskNumSelected] + ',' + colorRGBArray[3*whichTaskNumSelected+1] + ',' + colorRGBArray[3*whichTaskNumSelected+2] + ',' + gradientAlpha[Math.abs(relQuarter)] + ')';
+        console.log(quarterNeighborDOM.classList);
+
+        for(let i = 0; i < gradientAlpha.length; i++)
+        {
+            if (quarterNeighborDOM.classList.contains(gradientAlpha[i])){
+                console.log('bonk');
+            } else {
+                if(quarterNeighborDOM){
+                    //set
+                    quarterNeighborDOM.style.backgroundColor = 'rgba(' + colorRGBArray[3*whichTaskNumSelected] + ',' + colorRGBArray[3*whichTaskNumSelected+1] + ',' + colorRGBArray[3*whichTaskNumSelected+2] + ',' + gradientAlpha[Math.abs(relQuarter)] + ')';
+                    
+                    //add class markers based on alphas of newly generated gradient
+                    quarterNeighborDOM.classList.add(gradientAlpha[Math.abs(relQuarter)]);
+                }
+            }
         }
+        
+  
     }
   }
