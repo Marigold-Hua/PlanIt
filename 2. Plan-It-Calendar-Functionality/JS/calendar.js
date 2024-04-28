@@ -21,6 +21,7 @@ let isTaskSelected = false;
 const backgroundColor = window.getComputedStyle(document.body).backgroundColor; //get background color
 const colorArray = ['rgb(118, 218, 113, 1)', 'rgb(113, 207, 218, 1)']; //simplified colorArray
 const colorRGBArray = [118, 218, 113, 113, 207, 218]; 
+const gradientAlpha = [1, 0.5, 0.25];
 const color1and2Mix = ['rgb(118, 218, 113, 1)', 'rgb(117,216,134)', 'rgb(116,214,155)', 'rgb(115,211,176)', 'rgb(114,209,197)', 'rgb(113, 207, 218, 1)']
 //Arrays of information. 
 const dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -63,6 +64,7 @@ function makeCalendar(){
 }
 
 //Function calls all functions involved in dynamically generating calendar for smaller
+//Fix later
 function makeCalendarCarosuel(){
    makeWeek(false); 
 }
@@ -257,24 +259,23 @@ function addTask(){
     const macroQuarter = parseInt(fullQuarterIDName[2]);
 
      //Define gradient values
-     const gradientAlpha = [1, 0.5, 0.25];
-     
-    //Seperate get the R, G, B values and append the A value
-   
-     //Gets each quarter within 2 neighbors of the clicked quarter
-     for (let relQuarter = -2; relQuarter < 3; relQuarter++){
-        
-        //Gets neighboring quarter's information
-        const quarterNeighbor = macroQuarter + parseInt(relQuarter);
-        const quarterNeighborID = day + '-' + hour + '-' + quarterNeighbor;
-        const quarterNeighborDOM = document.getElementById(quarterNeighborID)
-        console.log(quarterNeighborDOM.classList);
 
-        for(let i = 0; i < gradientAlpha.length; i++)
-        {
-            if (quarterNeighborDOM.classList.contains(gradientAlpha[i])){
-                console.log('bonk');
-            } else {
+    //Act according to what is already in the gradient
+     for (gradient in gradientAlpha){
+        if (event.target.classList.contains(gradient)){
+            console.log('bonk');
+        }
+        else {
+
+            //Gets each quarter within 2 neighbors of the clicked quarter
+            for (let relQuarter = -2; relQuarter < 3; relQuarter++){
+            
+                //Gets neighboring quarter's information
+                const quarterNeighbor = macroQuarter + parseInt(relQuarter);
+                const quarterNeighborID = day + '-' + hour + '-' + quarterNeighbor;
+                const quarterNeighborDOM = document.getElementById(quarterNeighborID)
+                //console.log(quarterNeighborDOM.classList); //test which quarters are being accessed
+
                 if(quarterNeighborDOM){
                     //set
                     quarterNeighborDOM.style.backgroundColor = 'rgba(' + colorRGBArray[3*whichTaskNumSelected] + ',' + colorRGBArray[3*whichTaskNumSelected+1] + ',' + colorRGBArray[3*whichTaskNumSelected+2] + ',' + gradientAlpha[Math.abs(relQuarter)] + ')';
@@ -282,9 +283,7 @@ function addTask(){
                     //add class markers based on alphas of newly generated gradient
                     quarterNeighborDOM.classList.add(gradientAlpha[Math.abs(relQuarter)]);
                 }
-            }
-        }
-        
-  
+            }   
+         }
     }
   }
