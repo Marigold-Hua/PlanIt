@@ -7,8 +7,8 @@
 
 //Variables that will be set by user
 //Note that time variables are taken in as 24 hour time but displayed as 12 hour time
-let startTime = 6;  //start of "most productive hours"
-let endTime = 11; //End of "most productive hours"
+let startTime = 9;  //start of "most productive hours"
+let endTime = 17; //End of "most productive hours"
 //note that (endTime - startTime + 1)*4 -1 is the max quarter number for each day
 let taskLimit = 5; //max amount of tasks user can add
 
